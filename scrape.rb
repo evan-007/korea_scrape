@@ -1,19 +1,21 @@
 require 'nokogiri'
 require 'open-uri'
 
-scrape_url = 'http://www.thesouthkoreatravelguide.com/seoul/seoul_touristattractionreviews.html'
+scrape_url = 'http://travel.cnn.com/seoul/visit/50-beautiful-places-visit-korea-873093'
 page = Nokogiri::HTML(open(scrape_url))
 
-page.css('.location-item a').each do |link|
-  puts link['href']
+page.css('.field-item.even h2').each do |header|
+  
+	en_name =  header.text[/[a-zA-Z ]+/]
+	puts en_name
 end
 
-scrape_me = Nokogiri::HTML(open('http://www.thesouthkoreatravelguide.com/seoul/childrens-grand-park_attraction-review.html'))
+page.css('.clear-fix').each do |p|
+	en_desc = p.text
+	puts en_desc
+end
 
-@title = scrape_me.css('.left-hd-title').text
-
-@body = scrape_me.css('.location-sectextarea p').text
-
-#okay, but no address info
-
-#try here:  http://travel.cnn.com/seoul/visit/50-beautiful-places-visit-korea-873093
+page.css('.p3 em').each do |dir|
+	#not all the data we want is .p3, some are .p2
+	puts dir.text
+end
