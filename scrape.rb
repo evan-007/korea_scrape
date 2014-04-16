@@ -5,7 +5,6 @@ scrape_url = 'http://travel.cnn.com/seoul/visit/50-beautiful-places-visit-korea-
 page = Nokogiri::HTML(open(scrape_url))
 
 page.css('.field-item.even h2').each do |header|
-  
 	en_name =  header.text[/[a-zA-Z ]+/]
 	puts en_name
 end
@@ -18,4 +17,10 @@ end
 page.css('.p3 em').each do |dir|
 	#not all the data we want is .p3, some are .p2
 	puts dir.text
+end
+
+#get image urls
+page.css('.inline-image img').each do |image|
+  photo = image['src']
+  puts photo
 end
