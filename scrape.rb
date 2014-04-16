@@ -20,7 +20,11 @@ page.css('.p3 em').each do |dir|
 end
 
 #get image urls
+@count = 1
+
+#works?
 page.css('.inline-image img').each do |image|
-  photo = image['src']
-  puts photo
+  photo = open(image['src'])
+  File.open("#{@count}.png", 'wb' ) { |file| file.write(photo.read) }
+  @count += 1
 end
